@@ -1,0 +1,38 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+tasks.withType(Compile) {
+    options.encoding = "UTF-8"
+}
+group = 'com.lemon'
+sourceCompatibility = 1.7
+version = '1.0-SNAPSHOT'
+description = "Lemon MQ"
+
+repositories {
+    maven {
+        url "http://172.16.20.17:8081/nexus/content/groups/public"
+    }
+}
+
+dependencies {
+   	compile 'com.rabbitmq:amqp-client:3.2.0'
+  	compile 'org.slf4j:slf4j-api:1.7.6'
+  	compile 'ch.qos.logback:logback-core:1.1.1'
+	compile 'ch.qos.logback:logback-classic:1.1.1'
+}
+
+uploadArchives {
+   repositories {
+      deployer = mavenDeployer {
+        configureAuth = {
+           authentication(userName: 'deployment', password: 'lemon888')
+        }
+        snapshotRepository(url: "http://172.16.20.17:8081/nexus/content/repositories/snapshots/", configureAuth)
+        repository(url: "http://172.16.20.17:8081/nexus/content/repositories/releases/", configureAuth)
+        pom.groupId = 'com.lemon'
+        pom.artifactId = 'lemon-mq'
+      }
+   }
+}
