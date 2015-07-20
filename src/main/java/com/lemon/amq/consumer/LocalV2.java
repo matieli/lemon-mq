@@ -13,5 +13,7 @@ package com.lemon.amq.consumer;
  * @author ma_tl@suixingpay.com
  */
 public class LocalV2 {
-
+public static void main(String[] args) {
+	System.out.println("LocalV2LocalV2LocalV2LocalV2");
+}
 }
